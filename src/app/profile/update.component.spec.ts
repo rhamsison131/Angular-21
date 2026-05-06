@@ -1,7 +1,8 @@
+/// <reference types="jasmine" />
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { of } from 'rxjs';
+import { of } from 'rxjs';    
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 
 import { UpdateComponent } from './update.component';
@@ -15,9 +16,9 @@ describe('UpdateComponent', () => {
   const mockAccount = {
     id: '1',
     title: 'Mr',
-    firstName: 'Clint',
-    lastName: 'Capondag',
-    email: 'clint@example.com',
+    firstName: 'Rham',
+    lastName: 'Sison',
+    email: 'rham@example.com',
     role: Role.User,
     jwtToken: 'fake-jwt-token'
   };
