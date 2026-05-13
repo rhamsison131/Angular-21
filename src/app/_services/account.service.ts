@@ -36,7 +36,14 @@ export class AccountService {
     }
     
     logout() {
-        this.http.post<any>(`${baseUrl}/revoke-token`, {}, { withCredentials: true }).subscribe();
+        this.http.post<any>(`${baseUrl}/revoke-token`, {}, { withCredentials: true })
+            .subscribe({
+                next: () => this.clearLocalSession(),
+                error: () => this.clearLocalSession()
+            });
+    }
+
+    private clearLocalSession() {
         this.stopRefreshTokenTimer();
         this.accountSubject.next(null);
         this.router.navigate(['/account/login']);
