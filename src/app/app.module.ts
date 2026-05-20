@@ -2,8 +2,7 @@ import { NgModule, APP_INITIALIZER } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { CommonModule } from '@angular/common';        // <-- add this
-import { RouterModule } from '@angular/router';        // <-- add this
+import { environment } from '@environments/environment';
 
 // used to create fake backend
 import { fakeBackendProvider } from './_helpers';
@@ -18,8 +17,6 @@ import { HomeComponent } from './home';
 @NgModule({
     imports: [
         BrowserModule,
-        CommonModule,          // <-- add this
-        RouterModule,          // <-- add this
         ReactiveFormsModule,
         HttpClientModule,
         AppRoutingModule
@@ -29,12 +26,13 @@ import { HomeComponent } from './home';
         AlertComponent,
         HomeComponent
     ],
-   providers: [
-    { provide: APP_INITIALIZER, useFactory: appInitializer, multi: true, deps: [AccountService] },
-    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
-    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
-  //  fakeBackendProvider  
-],
+    providers: [
+        { provide: APP_INITIALIZER, useFactory: appInitializer, multi: true, deps: [AccountService] },
+        { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+        { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
+
+        ...(environment.production ? [] : [fakeBackendProvider])
+    ],
     bootstrap: [AppComponent]
 })
 export class AppModule { }
